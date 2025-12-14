@@ -10,6 +10,10 @@ from pathlib import Path
 
 #-----------------------------------------------------------------------------#
 
+# Set path for price_memory.txt
+BASE_DIR = Path(__file__).resolve().parent
+PRICE_MEMORY_FILE = BASE_DIR / "price_memory.txt"
+
 
 class CryptoTicker:
     '''Reusable ticker component for any cryptocurrency'''
@@ -140,7 +144,7 @@ class ToggleableTickerApp:
     def set_preference(self):
         '''Get data from price_memory.txt and open the tickers
         that were open since last closed'''
-        with open("../price_memory.txt", "r") as f:
+        with open(PRICE_MEMORY_FILE, "r") as f:
             preference = f.readlines()
 
             # For cases when user accidentally deletes the content of
@@ -181,11 +185,9 @@ class ToggleableTickerApp:
 
     def ensure_file_valid(self):
         '''Ensure price_memory.txt exists'''
-        path = Path("../price_memory.txt")
-
         # Create the file for first time users
-        if not path.exists():
-            path.write_text(
+        if not PRICE_MEMORY_FILE.exists():
+            PRICE_MEMORY_FILE.write_text(
                 "btc_visible = True\n"
                 "eth_visible = False\n"
                 "sol_visible = False\n"
@@ -266,7 +268,7 @@ class ToggleableTickerApp:
 
     def on_closing(self):
         """Clean up when closing."""
-        with open("../price_memory.txt", "w") as f:
+        with open(PRICE_MEMORY_FILE, "w") as f:
             f.write(f"btc_visible = {self.btc_visible}\n"
                     f"eth_visible = {self.eth_visible}\n"
                     f"sol_visible = {self.sol_visible}\n"
