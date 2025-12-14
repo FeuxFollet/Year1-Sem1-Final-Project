@@ -9,6 +9,7 @@ import matplotlib
 # Components Import
 
 from components.toggleable_ticker import ToggleableTickerApp
+from components.candlestick_chart import Candlestickchart
 
 #-----------------------------------------------------------------------------#
 # Creating Main Window
@@ -156,6 +157,30 @@ ETHtoggle.set_price_toggle(dashboard_app.toggle_eth)
 SOLtoggle.set_price_toggle(dashboard_app.toggle_sol)
 DOGEtoggle.set_price_toggle(dashboard_app.toggle_doge)
 SHIBtoggle.set_price_toggle(dashboard_app.toggle_shib)
+
+#-----------------------------------------------------------------------------#
+# Detailed Dashboard
+
+detaileddashboard = tk.Frame(dashboard, background="#313131")
+detaileddashboard.pack(fill="both", padx=15)
+
+dashboardlabel2 = tk.Label(
+    pricedashboard,
+    text="Currently showing [currency] detailed data",
+    font=("Helvetica", 14, "bold"),
+    foreground="#00bf63",
+    background="#313131"
+)
+dashboardlabel2.pack(pady=(30, 10), padx=(20,0), anchor="w")
+
+# Frame for the candlestick
+chart_frame = tk.Frame(detaileddashboard, bg="#313131")
+chart_frame.pack(side="left", fill="both", expand=True)
+
+# Create the Candlestick chart and start it
+candlestick = Candlestickchart("BTCUSDT", dashboardlabel2, "BTC/USDT")
+candlestick.initialize_graph(chart_frame)
+candlestick.start()
 
 
 # Start main loop
