@@ -1,0 +1,12 @@
+tkinter
+requests
+numpy
+matplotlib
+matplotlib.figure
+matplotlib.backends.backend_tkagg
+matplotlib.patches
+datetime
+websocket
+json
+threading
+pathlib
