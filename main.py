@@ -10,6 +10,7 @@ import matplotlib
 
 from components.toggleable_ticker import ToggleableTickerApp
 from components.candlestick_chart import Candlestickchart
+from components.orderbook import OrderBookPanel
 
 #-----------------------------------------------------------------------------#
 # Creating Main Window
@@ -182,6 +183,14 @@ candlestick = Candlestickchart("BTCUSDT", dashboardlabel2, "BTC/USDT")
 candlestick.initialize_graph(chart_frame)
 candlestick.start()
 
+# Frame for the orderbook
+orderbook_frame = tk.Frame(detaileddashboard, bg="#1e1e1e", width=260)
+orderbook_frame.pack(side="right", fill="y", padx=(0, 30))
 
+# Create the OrderBook
+orderbook = OrderBookPanel(orderbook_frame, "BTCUSDT")
+
+# For closing the app safely
+root.protocol("WM_DELETE_WINDOW", dashboard_app.on_closing)
 # Start main loop
 root.mainloop()
