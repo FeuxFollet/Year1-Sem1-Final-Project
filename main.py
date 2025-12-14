@@ -6,6 +6,10 @@ import requests
 import numpy as np
 import matplotlib
 
+# Components Import
+
+from components.toggleable_ticker import ToggleableTickerApp
+
 #-----------------------------------------------------------------------------#
 # Creating Main Window
 
@@ -116,6 +120,43 @@ ETHtoggle = CurrencyRow(grid_frame, row=2, name="Ether (ETH)")
 SOLtoggle = CurrencyRow(grid_frame, row=3, name="Solana (SOL)")
 DOGEtoggle = CurrencyRow(grid_frame, row=4, name="Dogecoin (DOGE)")
 SHIBtoggle = CurrencyRow(grid_frame, row=5, name="Shiba inu (SHIB)")
+
+#-----------------------------------------------------------------------------#
+# Dashboard frame
+
+dashboard = tk.Frame(toggler_and_dashboard, background="#313131")
+dashboard.pack(side="right", fill="both", expand=True)
+
+#-----------------------------------------------------------------------------#
+# Price dashboard
+
+# Frame for the price dashboard
+pricedashboard = tk.Frame(dashboard, background="#313131")
+pricedashboard.pack(fill="x", padx=15)
+
+dashboardlabel1 = tk.Label(
+    pricedashboard,
+    text="Price Dashboard",
+    font=("Helvetica", 12, "bold"),
+    foreground="#00bf63",
+    background="#313131"
+)
+dashboardlabel1.pack(pady=(10, 10), padx=(20,0), anchor="w")
+
+# Create price ticker
+dashboard_app = ToggleableTickerApp(pricedashboard, root)
+
+# Load up preferences
+dashboard_app.ensure_file_valid()
+dashboard_app.set_preference()
+
+# Set price toggle button's command
+BTCtoggle.set_price_toggle(dashboard_app.toggle_btc)
+ETHtoggle.set_price_toggle(dashboard_app.toggle_eth)
+SOLtoggle.set_price_toggle(dashboard_app.toggle_sol)
+DOGEtoggle.set_price_toggle(dashboard_app.toggle_doge)
+SHIBtoggle.set_price_toggle(dashboard_app.toggle_shib)
+
 
 # Start main loop
 root.mainloop()
