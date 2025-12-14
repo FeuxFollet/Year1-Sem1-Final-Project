@@ -9,6 +9,9 @@ This is a simple cryptocurrency tracker app that displays informations such as p
  - Detailed display button to display candlestick chart and orderbook on the dashboard.
  - Memorizes which price tickers were active when the application was closed and restores them on the next launch.
 
+## UI Preview
+![Main Dashboard](./demonstrations/preview.png)
+
  ## Project Structure
 ```bash
 project_orbit/
@@ -22,6 +25,11 @@ project_orbit/
 │   ├── app_demonstration.mp4   # Demonstration video
 │   └── preview.py              # UI preview image
 └── requirements.txt            # Dependencies
+
+```
+## Installing dependdencies
+```bash
+pip install -r requirements.txt
 
 ```
 
