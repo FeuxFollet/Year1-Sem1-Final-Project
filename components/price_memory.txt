@@ -1,0 +1,5 @@
+btc_visible = True
+eth_visible = False
+sol_visible = False
+doge_visible = False
+shib_visible = False

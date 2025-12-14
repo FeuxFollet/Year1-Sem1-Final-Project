@@ -174,6 +174,9 @@ dashboardlabel2 = tk.Label(
 )
 dashboardlabel2.pack(pady=(30, 10), padx=(20,0), anchor="w")
 
+#-----------------------------------------------------------------------------#
+# Candlestick Chart
+
 # Frame for the candlestick
 chart_frame = tk.Frame(detaileddashboard, bg="#313131")
 chart_frame.pack(side="left", fill="both", expand=True)
@@ -183,6 +186,9 @@ candlestick = Candlestickchart("BTCUSDT", dashboardlabel2, "BTC/USDT")
 candlestick.initialize_graph(chart_frame)
 candlestick.start()
 
+#-----------------------------------------------------------------------------#
+# Orderbook
+
 # Frame for the orderbook
 orderbook_frame = tk.Frame(detaileddashboard, bg="#1e1e1e", width=260)
 orderbook_frame.pack(side="right", fill="y", padx=(0, 30))
@@ -190,7 +196,35 @@ orderbook_frame.pack(side="right", fill="y", padx=(0, 30))
 # Create the OrderBook
 orderbook = OrderBookPanel(orderbook_frame, "BTCUSDT")
 
+#-----------------------------------------------------------------------------#
+# Functional display details button
+
+# Bundle up switch graph and currency so the button does both
+def display_detailed(currency, display):
+    candlestick.switch_graph(currency, display)
+    orderbook.switch_currency(currency)
+
+
+# Set button commands
+BTCtoggle.set_detailed_view(lambda: display_detailed("BTCUSDT", "BTC/USDT"))
+ETHtoggle.set_detailed_view(lambda: display_detailed("ETHUSDT", "ETH/USDT"))
+SOLtoggle.set_detailed_view(lambda: display_detailed("SOLUSDT", "SOL/USDT"))
+DOGEtoggle.set_detailed_view(lambda: display_detailed("DOGEUSDT", "DOGE/USDT"))
+SHIBtoggle.set_detailed_view(lambda: display_detailed("SHIBUSDT", "SHIB/USDT"))
+
+#-----------------------------------------------------------------------------#
+# Closing app safely
+
+# Bundle up on close methods
+def on_app_close():
+    candlestick.stop()
+    orderbook.stop()
+    dashboard_app.on_closing()
+
 # For closing the app safely
-root.protocol("WM_DELETE_WINDOW", dashboard_app.on_closing)
+root.protocol("WM_DELETE_WINDOW", on_app_close)
+
+#-----------------------------------------------------------------------------#
 # Start main loop
+
 root.mainloop()
